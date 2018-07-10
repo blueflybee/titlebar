@@ -13,7 +13,7 @@ import com.blueflybee.titlebarlib.utils.TitleBarUtils;
 import com.blueflybee.titlebarlib.widget.TitleBar;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
-import static com.blueflybee.titlebarlib.utils.ScreenUtils.getDisplayMetrics;
+import static com.blueflybee.titlebarlib.utils.TitleBarUtils.getDisplayMetrics;
 
 public class MainActivity extends SwipeBackActivity {
   private double maxAlphaEffectHeight;

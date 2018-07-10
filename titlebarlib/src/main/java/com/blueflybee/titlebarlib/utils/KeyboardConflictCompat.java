@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 /**
  * 解决沉浸式标题栏下，键盘兼容问题
  * <p>
- * Created by wuhenzhizao on 2017/9/5.
+ * KeyboardConflictCompat
  */
 public class KeyboardConflictCompat {
     private View mChildOfContent;

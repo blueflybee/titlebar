@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.ScrollView;
 
 /**
- * Created by wuhenzhizao on 16/1/14.
+ * GScrollView
  */
 public class GScrollView extends ScrollView {
   private OnScrollChangeListener listener;

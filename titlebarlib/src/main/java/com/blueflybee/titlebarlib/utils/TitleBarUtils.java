@@ -2,11 +2,15 @@ package com.blueflybee.titlebarlib.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.IBinder;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -206,4 +210,59 @@ public class TitleBarUtils {
     int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
     return context.getResources().getDimensionPixelSize(resourceId);
   }
+
+
+  public static float dp2Px(Context context, float dp) {
+    if (context == null) {
+      return -1;
+    }
+    return dp * density(context);
+  }
+
+  public static float density(Context context) {
+    return context.getResources().getDisplayMetrics().density;
+  }
+
+  public static int dp2PxInt(Context context, float dp) {
+    return (int) (dp2Px(context, dp) + 0.5f);
+  }
+
+  public static DisplayMetrics getDisplayMetrics(Context context) {
+    Activity activity;
+    if (!(context instanceof Activity) && context instanceof ContextWrapper) {
+      activity = (Activity) ((ContextWrapper) context).getBaseContext();
+    } else {
+      activity = (Activity) context;
+    }
+    DisplayMetrics metrics = new DisplayMetrics();
+    activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+    return metrics;
+  }
+
+  /**
+   * 获取屏幕大小
+   *
+   * @param context
+   * @return
+   */
+  public static int[] getScreenPixelSize(Context context) {
+    DisplayMetrics metrics = getDisplayMetrics(context);
+    return new int[]{metrics.widthPixels, metrics.heightPixels};
+  }
+
+  public static void hideSoftInputKeyBoard(Context context, View focusView) {
+    if (focusView != null) {
+      IBinder binder = focusView.getWindowToken();
+      if (binder != null) {
+        InputMethodManager imd = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imd.hideSoftInputFromWindow(binder, InputMethodManager.HIDE_IMPLICIT_ONLY);
+      }
+    }
+  }
+
+  public static void showSoftInputKeyBoard(Context context, View focusView) {
+    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+    imm.showSoftInput(focusView, InputMethodManager.SHOW_FORCED);
+  }
+
 }
