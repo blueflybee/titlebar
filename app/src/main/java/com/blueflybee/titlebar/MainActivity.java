@@ -1,17 +1,19 @@
 package com.blueflybee.titlebar;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Toast;
 
-import com.blueflybee.titlebarlib.utils.AppUtils;
 import com.blueflybee.titlebarlib.utils.KeyboardConflictCompat;
-import com.blueflybee.titlebarlib.utils.ScreenUtils;
-import com.blueflybee.titlebarlib.widget.CommonTitleBar;
+import com.blueflybee.titlebarlib.utils.TitleBarUtils;
+import com.blueflybee.titlebarlib.widget.TitleBar;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+
+import static com.blueflybee.titlebarlib.utils.ScreenUtils.getDisplayMetrics;
 
 public class MainActivity extends SwipeBackActivity {
   private double maxAlphaEffectHeight;
@@ -59,18 +61,18 @@ public class MainActivity extends SwipeBackActivity {
     }
 
 
-    final CommonTitleBar titleBar = (CommonTitleBar) findViewById(R.id.titlebar);
-    titleBar.setListener(new CommonTitleBar.OnTitleBarListener() {
+    final TitleBar titleBar = (TitleBar) findViewById(R.id.titlebar);
+    titleBar.setListener(new TitleBar.OnTitleBarListener() {
       @Override
       public void onClicked(View v, int action, String extra) {
-        if (action == CommonTitleBar.ACTION_LEFT_BUTTON
-            || action == CommonTitleBar.ACTION_LEFT_TEXT) {
+        if (action == TitleBar.ACTION_LEFT_BUTTON
+            || action == TitleBar.ACTION_LEFT_TEXT) {
           onBackPressed();
         }
       }
     });
 
-    titleBar.setDoubleClickListener(new CommonTitleBar.OnTitleBarDoubleClickListener() {
+    titleBar.setDoubleClickListener(new TitleBar.OnTitleBarDoubleClickListener() {
       @Override
       public void onClicked(View v) {
         Toast.makeText(MainActivity.this, "Titlebar double clicked!", Toast.LENGTH_SHORT).show();
@@ -82,7 +84,7 @@ public class MainActivity extends SwipeBackActivity {
     }
 
     if (position != 8) {
-      maxAlphaEffectHeight = ScreenUtils.getScreenPixelSize(this)[1] / 3;
+      maxAlphaEffectHeight = getScreenPixelSize(this)[1] / 3;
 
       final GScrollView sv = (GScrollView) findViewById(R.id.sv);
       sv.post(new Runnable() {
@@ -112,7 +114,7 @@ public class MainActivity extends SwipeBackActivity {
   }
 
   private void initSmartTab() {
-    CommonTitleBar titleBar = (CommonTitleBar) findViewById(R.id.titlebar);
+    TitleBar titleBar = (TitleBar) findViewById(R.id.titlebar);
     SmartTabLayout layout = (SmartTabLayout) titleBar.getCenterCustomView().findViewById(R.id.tab_list);
     ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
     viewPager.setAdapter(new TabFragmentAdapter(getSupportFragmentManager()));
@@ -123,7 +125,18 @@ public class MainActivity extends SwipeBackActivity {
   public void onAttachedToWindow() {
     super.onAttachedToWindow();
     KeyboardConflictCompat.assistWindow(getWindow());
-    AppUtils.StatusBarLightMode(getWindow());
-    AppUtils.transparencyBar(getWindow());
+    TitleBarUtils.StatusBarLightMode(getWindow());
+    TitleBarUtils.transparencyBar(getWindow());
+  }
+
+  /**
+   * 获取屏幕大小
+   *
+   * @param context
+   * @return
+   */
+  private int[] getScreenPixelSize(Context context) {
+    DisplayMetrics metrics = getDisplayMetrics(context);
+    return new int[]{metrics.widthPixels, metrics.heightPixels};
   }
 }

@@ -2,13 +2,12 @@ package com.blueflybee.titlebar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.blueflybee.titlebarlib.utils.AppUtils;
+import com.blueflybee.titlebarlib.utils.TitleBarUtils;
 
 
 public class LaunchActivity extends SwipeBackActivity {
@@ -55,7 +54,7 @@ public class LaunchActivity extends SwipeBackActivity {
   @Override
   public void onAttachedToWindow() {
     super.onAttachedToWindow();
-    AppUtils.StatusBarLightMode(getWindow());
-    AppUtils.transparencyBar(getWindow());
+    TitleBarUtils.StatusBarLightMode(getWindow());
+    TitleBarUtils.transparencyBar(getWindow());
   }
 }

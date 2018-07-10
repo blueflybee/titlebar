@@ -16,7 +16,7 @@
         <include layout="@layout/layout_fill" />
     </com.blueflybee.titlebar.GScrollView>
 
-    <com.blueflybee.titlebarlib.widget.CommonTitleBar
+    <com.blueflybee.titlebarlib.widget.TitleBar
         android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

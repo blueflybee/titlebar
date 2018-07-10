@@ -13,11 +13,11 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 
 /**
- * AppUtils
+ * TitleBarUtils
  */
-public class AppUtils {
+public class TitleBarUtils {
 
-  private AppUtils() {
+  private TitleBarUtils() {
     throw new AssertionError();
   }
 
@@ -33,8 +33,8 @@ public class AppUtils {
   public static boolean supportStatusBarLightMode(Context context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       Window window = ((Activity) context).getWindow();
-      if (AppUtils.MIUISetStatusBarLightMode(window, true)
-          || AppUtils.FlymeSetStatusBarLightMode(window, true)
+      if (TitleBarUtils.MIUISetStatusBarLightMode(window, true)
+          || TitleBarUtils.FlymeSetStatusBarLightMode(window, true)
           || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         return true;
       }
@@ -44,8 +44,8 @@ public class AppUtils {
 
   public static boolean supportStatusBarLightMode(Window window) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-      if (AppUtils.MIUISetStatusBarLightMode(window, true)
-          || AppUtils.FlymeSetStatusBarLightMode(window, true)
+      if (TitleBarUtils.MIUISetStatusBarLightMode(window, true)
+          || TitleBarUtils.FlymeSetStatusBarLightMode(window, true)
           || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         return true;
       }

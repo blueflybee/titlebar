@@ -37,7 +37,7 @@ public class KeyboardConflictCompat {
             }
         });
         frameLayoutParams = (FrameLayout.LayoutParams) mChildOfContent.getLayoutParams();
-        statusBarHeight = AppUtils.getStatusBarHeight(window.getContext());
+        statusBarHeight = TitleBarUtils.getStatusBarHeight(window.getContext());
     }
 
     private void possiblyResizeChildOfContent() {

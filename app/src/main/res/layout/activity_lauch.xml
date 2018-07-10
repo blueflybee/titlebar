@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".LaunchActivity">
 
-    <com.blueflybee.titlebarlib.widget.CommonTitleBar
+    <com.blueflybee.titlebarlib.widget.TitleBar
         android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
