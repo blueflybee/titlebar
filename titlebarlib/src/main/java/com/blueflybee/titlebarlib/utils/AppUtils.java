@@ -2,6 +2,7 @@ package com.blueflybee.titlebarlib.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
@@ -123,6 +124,82 @@ public class AppUtils {
       }
     }
     return result;
+  }
+
+  /**
+   * 设置状态栏黑色字体图标，
+   * 适配4.4以上版本MIUIV、Flyme和6.0以上版本其他Android
+   *
+   * @param window
+   * @return 1:MIUUI 2:Flyme 3:android6.0
+   */
+  public static int StatusBarLightMode(Window window) {
+    int result = 0;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      if (MIUISetStatusBarLightMode(window, true)) {
+        result = 1;
+      } else if (FlymeSetStatusBarLightMode(window, true)) {
+        result = 2;
+      } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        result = 3;
+      }
+    }
+    return result;
+  }
+
+  public static int StatusBarDarkMode(Window window) {
+    int result = 0;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      if (MIUISetStatusBarLightMode(window, false)) {
+        result = 1;
+      } else if (FlymeSetStatusBarLightMode(window, false)) {
+        result = 2;
+      } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        result = 3;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 已知系统类型时，设置状态栏黑色字体图标。
+   * 适配4.4以上版本MIUIV、Flyme和6.0以上版本其他Android
+   *
+   * @param window
+   * @param type   1:MIUUI 2:Flyme 3:android6.0
+   */
+  public static void StatusBarLightMode(Window window, int type) {
+    if (type == 1) {
+      MIUISetStatusBarLightMode(window, true);
+    } else if (type == 2) {
+      FlymeSetStatusBarLightMode(window, true);
+    } else if (type == 3) {
+      window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+
+  }
+
+  /**
+   * 修改状态栏为全透明
+   *
+   * @param window
+   */
+  public static void transparencyBar(Window window) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      if (MIUISetStatusBarLightMode(window, true)) {
+        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+      } else if (FlymeSetStatusBarLightMode(window, true)) {
+        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+      } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.TRANSPARENT);
+      }
+    }
   }
 
   public static int getStatusBarHeight(Context context) {
